@@ -316,11 +316,6 @@ def projects_btn():
     # Add edit or add buttons
     add_button = Button(projects, text = "Add", width = 20, height = 2).pack()
     update_button = Button(projects, text = "Update", width = 20, height = 2).pack()
-    update_button = Button(projects, text = "Update", width = 20, height = 2).pack()
-    update_button = Button(projects, text = "Update", width = 20, height = 2).pack()
-    update_button = Button(projects, text = "Update", width = 20, height = 2).pack()
-    update_button = Button(projects, text = "Update", width = 20, height = 2).pack()
-    update_button = Button(projects, text = "Update", width = 20, height = 2).pack()
-    
+
 
 
