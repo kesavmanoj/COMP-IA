@@ -28,6 +28,13 @@ def employees_btn():
             'attendance' : 0
         })
 
+        id_number.delete(0, END)
+        full_name.delete(0, END)
+        hours_per_week.delete(0, END)
+        salary.delete(0, END)
+        designation.delete(0, END)
+        project_number.delete(0, END)
+
         # Commit changes
         conn.commit()
         # Close the connection
@@ -127,6 +134,13 @@ def employees_btn():
                 'id_number2' : id_number2
             }
          )
+        id_number_edit.delete(0, END)
+        full_name_edit.delete(0, END)
+        hour_per_week_edit.delete(0, END)
+        salary_edit.delete(0, END)
+        designation_edit.delete(0, END)
+        project_number_edit.delete(0, END)
+
 
         # Commit changes
         conn.commit()
@@ -197,7 +211,43 @@ def designations_btn():
         conn = sqlite3.connect('iscon.db')
         c = conn.cursor()
 
+        edit_designation = Toplevel()
+        edit_designation.title('Edit or Add Designations')
+        edit_designation.geometry("350x400")
+
+        # Globalise the variables
+        global designation_number_edit
+        global designation__edit
+        global designation_wage_edit
         
+
+        # Creat the buttons and text
+        space_inBetween = Label(edit_designation, text = " ", width = 8, height = 1).grid(column = 0, row = 0)
+
+        designation_number_label_edit = Label(edit_designation, text = '   Designation Number   ').grid(column = 0, row = 1)
+        designation_number_edit = Entry(edit_designation)
+        designation_number_edit.grid(column = 1, row = 1)
+
+        designation_label_edit = Label(edit_designation, text = '   Designation   ').grid(column = 0, row = 2)
+        designation__edit = Entry(edit_designation)
+        designation__edit.grid(column = 1, row = 2)
+
+        designation_wage_label_edit = Label(edit_designation, text = '   Designation Wage   ').grid(column = 0, row = 3)
+        designation_wage_edit = Entry(edit_designation)
+        designation_wage_edit.grid(column = 1, row = 3)
+
+        save_btn = Button(edit_designation, text = "Save Designation", command = save).grid(column = 1, row = 4)
+
+        global designation_number
+        designation_number = enter_designation_number.get()
+        c.execute("SELECT * FROM sector WHERE sector_id =" + designation_number)
+        designations = c.fetchall()
+
+        for designation in designations:
+            designation_number_edit.insert(0, designation[0])
+            designation__edit.insert(0, designation[1])
+            designation_wage_edit.insert(0, designation[2])
+
 
         # Commit changes
         conn.commit()
@@ -219,7 +269,7 @@ def designations_btn():
     designation_wage = Entry(designations)
     designation_wage.grid(column = 1, row = 3)
 
-    enter_designation_number_label = Label(designations, text = "Enter Sector ID").grid(column = 0, row = 7)
+    enter_designation_number_label = Label(designations, text = "Enter Designation ID").grid(column = 0, row = 7)
     enter_designation_number = Entry(designations)
     enter_designation_number.grid(column = 1, row = 7)
 
@@ -229,7 +279,34 @@ def designations_btn():
     space_inBetween = Label(designations, text = " ", width = 8, height = 1).grid(column = 1, row = 4)
     space_inBetween = Label(designations, text = " ", width = 8, height = 1).grid(column = 1, row = 6)
     space_inBetween = Label(designations, text = " ", width = 8, height = 1).grid(column = 1, row = 8)
-  
+    
+    def save():
+        # Connect to database
+        conn = sqlite3.connect('iscon.db')
+        c = conn.cursor()
+
+        c.execute(""" UPDATE sector SET
+            sector_id = :sectorid,
+            sector_name = :sectorname,
+            sector_wage = :sectorwage 
+            
+            WHERE sector_id = :designation_number""",
+            {
+                'sectorid' : designation_number_edit.get(),
+                'sectorname' : designation__edit.get(),
+                'sectorwage' : designation_wage_edit.get(),
+                'designation_number': enter_designation_number.get()
+
+            })
+        
+        designation_number_edit.delete(0, END)
+        designation__edit.delete(0, END)
+        designation_wage_edit.delete(0, END)
+
+        # Commit changes
+        conn.commit()
+        # Close the connection
+        conn.close()        
 
 
 def projects_btn():
