@@ -312,10 +312,71 @@ def designations_btn():
 def projects_btn():
     projects = Toplevel()
     projects.title('Edit or Add Projects')
-    projects.geometry("200x200")
-    # Add edit or add buttons
-    add_button = Button(projects, text = "Add", width = 20, height = 2).pack()
-    update_button = Button(projects, text = "Update", width = 20, height = 2).pack()
+    projects.geometry("450x500")
 
+    def search():
+        return
 
+    def add_project():
+        return
+
+    def save():
+        return
+
+    # Create text labels
+    space_inBetween = Label(projects, text = " ", width = 8, height = 2).grid(column = 0, row = 0)
+
+    project_number_label = Label(projects, text = "Project number").grid(column = 0, row = 1)
+    project_number = Entry(projects)
+    project_number.grid(column = 1, row = 1)
+
+    percentage_completion_label = Label(projects, text = '               Percentage completion ').grid(column = 0, row = 2)
+    percentage_completion = Entry(projects)
+    percentage_completion.grid(column = 1, row = 2)
+
+    space_inBetween = Label(projects, text = " ", width = 8, height = 2).grid(column = 0, row = 3)
+
+    search_button = Button(projects, text = "Search", width = 20, height = 2, command = search).grid(column = 0, row = 4)
+    submit_button = Button(projects, text = "Submit", width = 20, height = 2, command = search).grid(column = 1, row = 4)
+
+    space_inBetween = Label(projects, text = " ", width = 8, height = 2).grid(column = 0, row = 5)
+    add_new_project_label = Label(projects, text ="    ADD NEW PROJECT  :  ").grid(column = 0, row = 6)
+    
+    total_wage_label = Label(projects, text = 'Total Wage').grid(column = 0, row = 7)
+    total_wage = Entry(projects)
+    total_wage.grid(column = 1, row = 7)
+
+    estimated_man_hours_label = Label(projects, text = "Estimated Man Hours").grid(column = 0, row = 8)
+    estimated_man_hours = Entry(projects)
+    estimated_man_hours.grid(column = 1, row = 8)
+    
+    space_inBetween = Label(projects, text = " ", width = 8, height = 2).grid(column = 0, row = 9)
+    specific_estimated_man_hours_label = Label(projects, text = '   SPECIFIC ESTIMATED MAN HOURS  :    ').grid(column = 0, row = 10)
+
+    welder_manhours_label = Label(projects, text = 'Welder').grid(column = 0, row = 11)
+    welder_manhours = Entry(projects)
+    welder_manhours.grid(column = 1, row = 11)
+
+    builder_manhours_label = Label(projects, text = 'Builder').grid(column = 0, row = 12 )
+    builder_manhours = Entry(projects)
+    builder_manhours.grid(column = 1, row =12 )
+
+    painter_manhours_label = Label(projects, text = 'Painter').grid(column = 0, row =13 )
+    painter_manhours = Entry(projects)
+    painter_manhours.grid(column = 1, row =13 )   
+
+    engineer_manhours_label = Label(projects, text = 'Engineer').grid(column = 0, row =14 )
+    engineer_manhours = Entry(projects)
+    engineer_manhours.grid(column = 1, row =14 )
+
+    manager_manhours_label = Label(projects, text = 'Manager').grid(column = 0, row =15 )
+    manager_manhours = Entry(projects)
+    manager_manhours.grid(column = 1, row =15 )
+
+    fitter_manhours_label = Label(projects, text = 'Fitter').grid(column = 0, row =16 )
+    fitter_manhours = Entry(projects)
+    fitter_manhours.grid(column = 1, row =16 )
+
+    
+    save_button = Button(projects, text = "Save", width = 40, height = 2, command = save).grid(column = 1, row = 4)   
 
