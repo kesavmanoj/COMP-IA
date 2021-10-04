@@ -1,0 +1,21 @@
+    space_inBetween = Label(projects, text = " ", width = 8, height = 2).grid(column = 0, row = 0)
+
+    price_label = Label(projects, text = "    Price    ").grid(column = 0, row = 1)
+    price = Entry(projects)
+    price.grid(column = 1, row = 1)
+
+    estimated_man_hours_label = Label(projects, text = ' Estimated man hours ').grid(column = 0, row = 2)
+    estimated_man_hours = Entry(projects)
+    estimated_man_hours.grid(column = 1, row = 2)  
+
+    current_manhours_label = Label(projects, text = ' Current manhours').grid(column = 0, row = 3)
+    current_manhours = Entry(projects)
+    current_manhours.grid(column = 1, row = 3)
+
+    percentage_completion_label = Label(projects, text = 'Percentage completion').grid(column = 0, row = 4)
+    percentage_completion = Entry(projects)
+    percentage_completion.grid(column = 1, row = 4)
+
+    project_number_label = Label(projects, text = "Project number").grid(column = 0, row = 5)
+    project_number = Entry(projects)
+    project_number.grid(column = 1, row = 5)

@@ -15,7 +15,6 @@ conn = sqlite3.connect('iscon.db')
 c = conn.cursor()
 
 
-
 # Create top buttons
 employees_btn = Button(root, text = "Employees", width = 20, height = 2, command = employees_btn).grid(row = 0, column = 0)
 designation_btn = Button(root, text = 'Designations', width = 20, height = 2, command = designations_btn).grid(row = 0, column = 1)
