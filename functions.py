@@ -312,23 +312,149 @@ def designations_btn():
 def projects_btn():
     projects = Toplevel()
     projects.title('Edit or Add Projects')
-    projects.geometry("450x500")
+    projects.geometry("410x600")
 
     def search():
-        return
+        search_projects = Toplevel()
+        search_projects.title('Search for project')
+        search_projects.geometry("400x600")
 
-    def add_project():
+         # Connect to database
+        conn = sqlite3.connect('iscon.db')
+        c = conn.cursor()
+        x = 3
+        space_inBetween = Label(search_projects, text = "   ", width = 15, height = 2).grid(column = 0, row = 0)
+        project_number_label = Label(search_projects, text = '   Project Number   ').grid(column = 0, row = x+1)
+        project_number = Entry(search_projects)
+        project_number.grid(column = 1, row = x+1)
+
+        total_current_manhours_label = Label(search_projects, text = "    Total current man hours     ").grid(column = 0, row = x+2)
+        total_current_manhours = Entry(search_projects)
+        total_current_manhours.grid(column = 1, row = x+2)
+
+        estimated_current_manhours_label = Label(search_projects, text = "    Estimated man hours     ").grid(column = 0, row = x+3)
+        estimated_current_manhours = Entry(search_projects)
+        estimated_current_manhours.grid(column = 1, row = x+3)
+
+        percentage_completion_label = Label(search_projects, text = "    Total % Completion     ").grid(column = 0, row = x+4)
+        percentage_completion = Entry(search_projects)
+        percentage_completion.grid(column = 1, row = x+4)
+        
+        wages_paid_label = Label(search_projects, text = "Wages paid").grid(column = 0, row = x+5)
+        wages_paid = Entry(search_projects)
+        wages_paid.grid(column = 1, row = x+5)
+
+        total_estimated_wage_label = Label(search_projects, text = "Total estimated wage").grid(column = 0, row = x+6)
+        total_estimated_wage = Entry(search_projects)
+        total_estimated_wage.grid(column = 1, row = x+6)
+
+        space_inBetween = Label(search_projects, text = " ", width = 8, height = 2).grid(column = 0, row = 10) 
+        specific_estimated_man_hours_label = Label(search_projects, text = '   SPECIFIC ESTIMATED MAN HOURS  :    ').grid(column = 0, row = 11)
+
+        welder_manhours_label = Label(search_projects, text = 'Welder').grid(column = 0, row = 12)
+        welder_manhours = Entry(search_projects)
+        welder_manhours.grid(column = 1, row = 12)
+
+        builder_manhours_label = Label(search_projects, text = 'Builder').grid(column = 0, row = 13 )
+        builder_manhours = Entry(search_projects)
+        builder_manhours.grid(column = 1, row =13 )
+
+        painter_manhours_label = Label(search_projects, text = 'Painter').grid(column = 0, row =14 )
+        painter_manhours = Entry(search_projects)
+        painter_manhours.grid(column = 1, row =14 )   
+
+        engineer_manhours_label = Label(search_projects, text = 'Engineer').grid(column = 0, row =15 )
+        engineer_manhours = Entry(search_projects)
+        engineer_manhours.grid(column = 1, row =15 )
+
+        manager_manhours_label = Label(search_projects, text = 'Manager').grid(column = 0, row =16 )
+        manager_manhours = Entry(search_projects)
+        manager_manhours.grid(column = 1, row =16 )
+
+        fitter_manhours_label = Label(search_projects, text = 'Fitter').grid(column = 0, row =17 )
+        fitter_manhours = Entry(search_projects)
+        fitter_manhours.grid(column = 1, row =17 )
+
+        # get the project detail from project number
+        global project_number2
+        project_number2 = project_number_search.get()
+        c.execute("SELECT * FROM projects WHERE project_number = " + project_number2)
+        project_records = c.fetchall
+
+
+        # Commit changes
+        conn.commit()
+        # Close the connection
+        conn.close()         
         return
 
     def save():
-        return
+        # Connect to database
+        conn = sqlite3.connect('iscon.db')
+        c = conn.cursor()
+        
+        # Insert the values
+        c.execute("""INSERT INTO projects (
+            price,
+            estimated_man_hours,
+            project_number,
+            welder_manhours,
+            builder_manhours,
+            painter_manhours,
+            engineer_manhours,
+            manager_manhours,
+            fitter_manhours
+            )
+            VALUES
+                (
+                    :price,
+                    :estimated_man_hours,
+                    :project_number,
+                    :welder_manhours,
+                    :builder_manhours,
+                    :painter_manhours,
+                    :engineer_manhours,
+                    :manager_manhours,
+                    :fitter_manhours
+                )                          """,
+            {
+                'price' : total_wage.get(),
+                'estimated_man_hours' : estimated_man_hours.get(),
+                'project_number' : project_number.get(),
+                'welder_manhours' : welder_manhours.get(),
+                'builder_manhours' : builder_manhours.get(),
+                'painter_manhours' : painter_manhours.get(),
+                'engineer_manhours' : engineer_manhours.get(),
+                'manager_manhours' : manager_manhours.get(),
+                'fitter_manhours' : fitter_manhours.get()
+            })
+        
+        total_wage.delete(0, END)
+        estimated_man_hours.delete(0, END)
+        project_number.delete(0, END)
+        welder_manhours.delete(0, END)
+        builder_manhours.delete(0, END)
+        painter_manhours.delete(0, END)
+        engineer_manhours.delete(0, END)
+        manager_manhours.delete(0, END)
+        fitter_manhours.delete(0, END)
+
+        
+
+        # Commit changes
+        conn.commit()
+        # Close the connection
+        conn.close()         
+      
+
+
 
     # Create text labels
     space_inBetween = Label(projects, text = " ", width = 8, height = 2).grid(column = 0, row = 0)
 
-    project_number_label = Label(projects, text = "Project number").grid(column = 0, row = 1)
-    project_number = Entry(projects)
-    project_number.grid(column = 1, row = 1)
+    project_number_search_label = Label(projects, text = "Project number").grid(column = 0, row = 1)
+    project_number_search = Entry(projects)
+    project_number_search.grid(column = 1, row = 1)
 
     percentage_completion_label = Label(projects, text = '               Percentage completion ').grid(column = 0, row = 2)
     percentage_completion = Entry(projects)
@@ -350,33 +476,37 @@ def projects_btn():
     estimated_man_hours = Entry(projects)
     estimated_man_hours.grid(column = 1, row = 8)
     
-    space_inBetween = Label(projects, text = " ", width = 8, height = 2).grid(column = 0, row = 9)
-    specific_estimated_man_hours_label = Label(projects, text = '   SPECIFIC ESTIMATED MAN HOURS  :    ').grid(column = 0, row = 10)
+    project_number_label = Label(projects, text = "Project number").grid(column = 0, row = 9)
+    project_number = Entry(projects)
+    project_number.grid(column = 1, row = 9)
+    space_inBetween = Label(projects, text = " ", width = 8, height = 2).grid(column = 0, row = 10) 
+    specific_estimated_man_hours_label = Label(projects, text = '   SPECIFIC ESTIMATED MAN HOURS  :    ').grid(column = 0, row = 11)
 
-    welder_manhours_label = Label(projects, text = 'Welder').grid(column = 0, row = 11)
+    welder_manhours_label = Label(projects, text = 'Welder').grid(column = 0, row = 12)
     welder_manhours = Entry(projects)
-    welder_manhours.grid(column = 1, row = 11)
+    welder_manhours.grid(column = 1, row = 12)
 
-    builder_manhours_label = Label(projects, text = 'Builder').grid(column = 0, row = 12 )
+    builder_manhours_label = Label(projects, text = 'Builder').grid(column = 0, row = 13 )
     builder_manhours = Entry(projects)
-    builder_manhours.grid(column = 1, row =12 )
+    builder_manhours.grid(column = 1, row =13 )
 
-    painter_manhours_label = Label(projects, text = 'Painter').grid(column = 0, row =13 )
+    painter_manhours_label = Label(projects, text = 'Painter').grid(column = 0, row =14 )
     painter_manhours = Entry(projects)
-    painter_manhours.grid(column = 1, row =13 )   
+    painter_manhours.grid(column = 1, row =14 )   
 
-    engineer_manhours_label = Label(projects, text = 'Engineer').grid(column = 0, row =14 )
+    engineer_manhours_label = Label(projects, text = 'Engineer').grid(column = 0, row =15 )
     engineer_manhours = Entry(projects)
-    engineer_manhours.grid(column = 1, row =14 )
+    engineer_manhours.grid(column = 1, row =15 )
 
-    manager_manhours_label = Label(projects, text = 'Manager').grid(column = 0, row =15 )
+    manager_manhours_label = Label(projects, text = 'Manager').grid(column = 0, row =16 )
     manager_manhours = Entry(projects)
-    manager_manhours.grid(column = 1, row =15 )
+    manager_manhours.grid(column = 1, row =16 )
 
-    fitter_manhours_label = Label(projects, text = 'Fitter').grid(column = 0, row =16 )
+    fitter_manhours_label = Label(projects, text = 'Fitter').grid(column = 0, row =17 )
     fitter_manhours = Entry(projects)
-    fitter_manhours.grid(column = 1, row =16 )
+    fitter_manhours.grid(column = 1, row =17 )
 
-    
-    save_button = Button(projects, text = "Save", width = 40, height = 2, command = save).grid(column = 1, row = 4)   
+    space_inBetween = Label(projects, text = " ", width = 8, height = 2).grid(column = 0, row = 18)    
+    save_button = Button(projects, text = "Save", width = 40, height = 2, command = save).grid(column = 0, row = 19, columnspan=2)   
+
 
