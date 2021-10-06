@@ -1,3 +1,4 @@
+from os import lseek
 from tkinter import *
 from PIL import ImageTk, Image
 from tkinter import filedialog
@@ -317,12 +318,13 @@ def projects_btn():
     def search():
         search_projects = Toplevel()
         search_projects.title('Search for project')
-        search_projects.geometry("400x600")
+        search_projects.geometry("540x450")
 
          # Connect to database
         conn = sqlite3.connect('iscon.db')
         c = conn.cursor()
         x = 3
+
         space_inBetween = Label(search_projects, text = "   ", width = 15, height = 2).grid(column = 0, row = 0)
         project_number_label = Label(search_projects, text = '   Project Number   ').grid(column = 0, row = x+1)
         project_number = Entry(search_projects)
@@ -349,38 +351,67 @@ def projects_btn():
         total_estimated_wage.grid(column = 1, row = x+6)
 
         space_inBetween = Label(search_projects, text = " ", width = 8, height = 2).grid(column = 0, row = 10) 
-        specific_estimated_man_hours_label = Label(search_projects, text = '   SPECIFIC ESTIMATED MAN HOURS  :    ').grid(column = 0, row = 11)
+        specific_estimated_man_hours_label = Label(search_projects, text = '   SPECIFIC MAN HOURS  :    ').grid(column = 0, row = 11)
+        current_man_hours__label = Label(search_projects, text = 'Current man hours').grid(column = 1, row = 11)
+        estimated_man_hours = Label(search_projects, text = 'Estimated man hours').grid(column = 2, row = 11)
 
         welder_manhours_label = Label(search_projects, text = 'Welder').grid(column = 0, row = 12)
         welder_manhours = Entry(search_projects)
         welder_manhours.grid(column = 1, row = 12)
+        estimated_welder_manhours = Entry(search_projects)
+        estimated_welder_manhours.grid(column = 2, row = 12)
 
         builder_manhours_label = Label(search_projects, text = 'Builder').grid(column = 0, row = 13 )
         builder_manhours = Entry(search_projects)
         builder_manhours.grid(column = 1, row =13 )
+        estimated_builder_manhours = Entry(search_projects)
+        estimated_builder_manhours.grid(column = 2, row = 13)
 
         painter_manhours_label = Label(search_projects, text = 'Painter').grid(column = 0, row =14 )
         painter_manhours = Entry(search_projects)
-        painter_manhours.grid(column = 1, row =14 )   
+        painter_manhours.grid(column = 1, row =14 )  
+        estimated_painter_manhours = Entry(search_projects)
+        estimated_painter_manhours.grid(column = 2, row = 14)
 
         engineer_manhours_label = Label(search_projects, text = 'Engineer').grid(column = 0, row =15 )
         engineer_manhours = Entry(search_projects)
         engineer_manhours.grid(column = 1, row =15 )
+        estimated_engineer_manhours = Entry(search_projects)
+        estimated_engineer_manhours.grid(column = 2, row = 15)
 
         manager_manhours_label = Label(search_projects, text = 'Manager').grid(column = 0, row =16 )
         manager_manhours = Entry(search_projects)
         manager_manhours.grid(column = 1, row =16 )
+        estimated_manager_manhours = Entry(search_projects)
+        estimated_manager_manhours.grid(column = 2, row = 16)
 
         fitter_manhours_label = Label(search_projects, text = 'Fitter').grid(column = 0, row =17 )
         fitter_manhours = Entry(search_projects)
         fitter_manhours.grid(column = 1, row =17 )
+        estimated_fitter_manhours = Entry(search_projects)
+        estimated_fitter_manhours.grid(column = 2, row = 17)
 
         # get the project detail from project number
         global project_number2
         project_number2 = project_number_search.get()
         c.execute("SELECT * FROM projects WHERE project_number = " + project_number2)
-        project_records = c.fetchall
+        project_records = c.fetchall()
 
+        for project_record in project_records:
+
+            project_number.insert(0, project_record[4])
+            estimated_current_manhours.insert(0, project_record[1])
+            total_current_manhours.insert(0, project_record[2])
+            percentage_completion.insert(0, project_record[3])
+            total_estimated_wage.insert(0, project_record[0])
+            estimated_welder_manhours.insert(0, project_record[5])
+            estimated_builder_manhours.insert(0, project_record[6])
+            estimated_painter_manhours.insert(0, project_record[7])
+            estimated_engineer_manhours.insert(0, project_record[8])
+            estimated_manager_manhours.insert(0, project_record[9])
+            estimated_fitter_manhours.insert(0, project_record[10])
+
+            
 
         # Commit changes
         conn.commit()

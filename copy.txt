@@ -28,3 +28,13 @@ c.execute("INSERT INTO projects VALUES (:price, :estimated_man_hours, :current_m
             'estimated_man_hours' : estimated_man_hours.get(),
             'project_number' : project_number.get()
         })
+
+
+
+                for project_record in project_records:
+            estimated_welder_manhours.insert(0, project_record[5])
+            estimated_builder_manhours.insert(0, project_record[6])
+            estimated_painter_manhours.insert(0, project_record[7])
+            estimated_engineer_manhours.insert(0, project_record[8])
+            estimated_manager_manhours.insert(0, project_record[9])
+            estimated_fitter_manhours.insert(0, project_record[10])
