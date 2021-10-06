@@ -394,7 +394,7 @@ def projects_btn():
         # get the project detail from project number
         global project_number2
         project_number2 = project_number_search.get()
-        c.execute("SELECT * FROM projects WHERE project_number = " + project_number2)
+        projects_records = c.execute("SELECT * FROM projects WHERE project_number = " + project_number2)
         project_records = c.fetchall()
 
         for project_record in project_records:
@@ -410,8 +410,8 @@ def projects_btn():
             estimated_engineer_manhours.insert(0, project_record[8])
             estimated_manager_manhours.insert(0, project_record[9])
             estimated_fitter_manhours.insert(0, project_record[10])
+        
 
-            
 
         # Commit changes
         conn.commit()
@@ -477,7 +477,25 @@ def projects_btn():
         # Close the connection
         conn.close()         
       
+    def submit():
+        # Connect to database
+        conn = sqlite3.connect('iscon.db')
+        c = conn.cursor()
+        
+        c.execute("""UPDATE projects
+        SET percentage_completion = :percentagecompletion
+        WHERE project_number = :projectNumber""",
+        {
+            'percentagecompletion' : percentage_completion.get(),
+            'projectNumber' : project_number_search.get()
+        }
+        )
 
+        # Commit changes
+        conn.commit()
+        # Close the connection
+        conn.close() 
+        
 
 
     # Create text labels
@@ -494,7 +512,7 @@ def projects_btn():
     space_inBetween = Label(projects, text = " ", width = 8, height = 2).grid(column = 0, row = 3)
 
     search_button = Button(projects, text = "Search", width = 20, height = 2, command = search).grid(column = 0, row = 4)
-    submit_button = Button(projects, text = "Submit", width = 20, height = 2, command = search).grid(column = 1, row = 4)
+    submit_button = Button(projects, text = "Submit", width = 20, height = 2, command = submit).grid(column = 1, row = 4)
 
     space_inBetween = Label(projects, text = " ", width = 8, height = 2).grid(column = 0, row = 5)
     add_new_project_label = Label(projects, text ="    ADD NEW PROJECT  :  ").grid(column = 0, row = 6)

@@ -25,9 +25,7 @@ enter_employee_id_label = Label(root, text = "Enter Employee Number : ", width =
 enter_employee_id = Entry(root, width = 20)
 enter_employee_id.grid(row = 2, column = 1)
 enter_btn = Button(root, text = "Enter", width = 20, height = 1).grid(row = 2, column = 2)
-
-# Create textboxes for top-button tabs  
-
+ 
 
 # Commit changes
 conn.commit()  
