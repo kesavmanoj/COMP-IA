@@ -1,9 +1,7 @@
 from tkinter import *
-from PIL import ImageTk, Image
 from tkinter import filedialog
 from functions import *
 import sqlite3
-from main_functions import *
 
 
 root = Tk()
@@ -14,6 +12,38 @@ root.geometry("449x400")
 # Connect to Database and create a cursor
 conn = sqlite3.connect('iscon.db')
 c = conn.cursor()
+
+# Add number of hours worked and update project manhours
+def enter():
+    # Connect to Database and create a cursor
+    conn = sqlite3.connect('iscon.db')
+    c = conn.cursor()
+
+    c.execute("""UPDATE employees 
+        SET attendance = attendance + 1,
+        project_number = :projectnumber
+        WHERE id_number = :idnumber """,
+        {
+            'projectnumber' : enter_project_number.get(),
+            'idnumber' : enter_employee_id.get()
+        })
+    
+    c.execute(""" UPDATE projects
+        SET current_manhours = current_manhours + :entered_manhours
+        WHERE project_number = :projectnumber
+        """,
+        {
+            'entered_manhours' : enter_hours.get(),
+            'specific_manhours' : 'welder_manhours',   
+            'projectnumber' : enter_project_number.get                                                                        
+        }
+        )
+
+    # Commit changes
+    conn.commit()  
+     # Close the connection
+    conn.close()
+    return
 
 # Create top buttons
 employees_btn = Button(root, text = "Employees", width = 20, height = 2, command = employees_btn).grid(row = 0, column = 0)
@@ -33,7 +63,7 @@ enter_hours_label = Label(root, text = 'No. of Hours Worked : ',  width = 20, he
 enter_hours = Entry(root, width = 20)
 enter_hours.grid(row = 4, column = 1)
 
-enter_btn = Button(root, text = "Enter", width = 20, height = 2, command= find).grid(row = 5, column = 1)
+enter_btn = Button(root, text = "Enter", width = 20, height = 2, command= enter).grid(row = 5, column = 1)
 
 # Commit changes
 conn.commit()  
