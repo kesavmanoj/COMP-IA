@@ -457,7 +457,15 @@ def projects_btn():
                 'manager_manhours' : manager_manhours.get(),
                 'fitter_manhours' : fitter_manhours.get()
             })
-        
+        c.execute(""" INSERT into specific_man_hours (project_id)
+            VALUES
+               (
+                        :projectid
+                )""",
+            {
+                "projectid" : project_number.get()
+            })
+
         total_wage.delete(0, END)
         estimated_man_hours.delete(0, END)
         project_number.delete(0, END)

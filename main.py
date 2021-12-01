@@ -8,6 +8,9 @@ root = Tk()
 root.title('Program') 
 root.geometry("449x400")
 
+sectors = ["welder", "builder", "painter", "engineer", "manager", "fitter"]
+
+
 
 # Connect to Database and create a cursor
 conn = sqlite3.connect('iscon.db')
@@ -33,12 +36,17 @@ def enter():
         WHERE project_number = :projectnumber
         """,
         {
-            'entered_manhours' : enter_hours.get(),
-            'specific_manhours' : 'welder_manhours',   
-            'projectnumber' : enter_project_number.get                                                                        
+            'entered_manhours' : enter_hours.get(),  
+            'projectnumber' : enter_project_number.get()                                                        
         }
         )
-
+    
+    c.execute(""" SELECT designation FROM employees WHERE id_number = :idnumber""",
+        {
+            'idnumber' : enter_employee_id.get()
+        })
+    x = c.fetchone()
+    print(x[0])
     # Commit changes
     conn.commit()  
      # Close the connection
