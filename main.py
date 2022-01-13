@@ -11,7 +11,6 @@ root.geometry("449x400")
 sectors = ["welder", "builder", "painter", "engineer", "manager", "fitter"]
 
 
-
 # Connect to Database and create a cursor
 conn = sqlite3.connect('iscon.db')
 c = conn.cursor()
@@ -38,8 +37,7 @@ def enter():
         {
             'entered_manhours' : enter_hours.get(),  
             'projectnumber' : enter_project_number.get()                                                        
-        }
-        )
+        })
     
     c.execute(""" SELECT designation FROM employees WHERE id_number = :idnumber""",
         {
@@ -47,7 +45,6 @@ def enter():
         })
     x = c.fetchone()
     designation = x[0]
-    print(designation)
 
     if designation == "Welder":
         c.execute(""" UPDATE specific_man_hours
@@ -98,7 +95,7 @@ def enter():
           'entered_manhours' : enter_hours.get()
        })
 
-
+    c.execute(""" UPDATE """)
 
     # Commit changes
     conn.commit()  

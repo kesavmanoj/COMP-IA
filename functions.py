@@ -409,7 +409,16 @@ def projects_btn():
             estimated_manager_manhours.insert(0, project_record[9])
             estimated_fitter_manhours.insert(0, project_record[10])
         
-
+        currents_manhours = c.execute("SELECT * FROM specific_man_hours WHERE project_number = "+ project_number2)
+        current_manhours = c.fetchall()
+        
+        for current_manhour in current_manhours:
+            welder_manhours.insert(0, current_manhour[1])
+            builder_manhours.insert(0, current_manhour[2])
+            painter_manhours.insert(0, current_manhour[3])
+            engineer_manhours.insert(0, current_manhour[4])
+            manager_manhours.insert(0, current_manhour[5])
+            fitter_manhours.insert(0, current_manhour[6])
 
         # Commit changes
         conn.commit()
@@ -432,7 +441,10 @@ def projects_btn():
             painter_manhours,
             engineer_manhours,
             manager_manhours,
-            fitter_manhours
+            fitter_manhours,
+            current_manhours,
+            percentage_completion,
+            wages_payable
             )
             VALUES
                 (
@@ -444,7 +456,8 @@ def projects_btn():
                     :painter_manhours,
                     :engineer_manhours,
                     :manager_manhours,
-                    :fitter_manhours
+                    :fitter_manhours,
+                    0, 0, 0
                 )                          """,
             {
                 'price' : total_wage.get(),
@@ -457,10 +470,10 @@ def projects_btn():
                 'manager_manhours' : manager_manhours.get(),
                 'fitter_manhours' : fitter_manhours.get()
             })
-        c.execute(""" INSERT into specific_man_hours (project_id)
+        c.execute(""" INSERT into specific_man_hours (project_number, Welder, Builder, Painter, Engineer, Manager, Fitter)
             VALUES
                (
-                        :projectid
+                        :projectid, 0, 0, 0, 0, 0, 0
                 )""",
             {
                 "projectid" : project_number.get()
