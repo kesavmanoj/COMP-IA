@@ -46,7 +46,60 @@ def enter():
             'idnumber' : enter_employee_id.get()
         })
     x = c.fetchone()
-    print(x[0])
+    designation = x[0]
+    print(designation)
+
+    if designation == "Welder":
+        c.execute(""" UPDATE specific_man_hours
+        SET Welder = Welder + :entered_manhours
+        WHERE project_number = :projectnumber""",
+         {
+           'projectnumber' : enter_project_number.get(),
+          'entered_manhours' : enter_hours.get()
+       })
+    elif designation == "Builder":
+        c.execute(""" UPDATE specific_man_hours
+        SET Builder = Builder + :entered_manhours
+        WHERE project_number = :projectnumber""",
+         {
+           'projectnumber' : enter_project_number.get(),
+          'entered_manhours' : enter_hours.get()
+       })
+    elif designation == "Painter":
+        c.execute(""" UPDATE specific_man_hours
+        SET Painter = Painter + :entered_manhours
+        WHERE project_number = :projectnumber""",
+         {
+           'projectnumber' : enter_project_number.get(),
+          'entered_manhours' : enter_hours.get()
+       })
+    elif designation == "Engineer":
+        c.execute(""" UPDATE specific_man_hours
+        SET Engineer = Engineer + :entered_manhours
+        WHERE project_number = :projectnumber""",
+         {
+           'projectnumber' : enter_project_number.get(),
+          'entered_manhours' : enter_hours.get()
+       })
+    elif designation == "Manager":
+        c.execute(""" UPDATE specific_man_hours
+        SET Manager = Manager + :entered_manhours
+        WHERE project_number = :projectnumber""",
+         {
+           'projectnumber' : enter_project_number.get(),
+          'entered_manhours' : enter_hours.get()
+       })
+    elif designation == "Fitter":
+        c.execute(""" UPDATE specific_man_hours
+        SET Fitter = Fitter + :entered_manhours
+        WHERE project_number = :projectnumber""",
+         {
+           'projectnumber' : enter_project_number.get(),
+          'entered_manhours' : enter_hours.get()
+       })
+
+
+
     # Commit changes
     conn.commit()  
      # Close the connection
