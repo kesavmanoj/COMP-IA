@@ -38,3 +38,10 @@ c.execute("INSERT INTO projects VALUES (:price, :estimated_man_hours, :current_m
             estimated_engineer_manhours.insert(0, project_record[8])
             estimated_manager_manhours.insert(0, project_record[9])
             estimated_fitter_manhours.insert(0, project_record[10])
+
+
+     c.execute(""" UPDATE projects
+                SET wages_payable = wages_payable + :wages_calculated""",
+                {
+                    'wages_calculated' : sectorWage*enter_hours.get()
+                })

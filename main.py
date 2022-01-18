@@ -95,7 +95,24 @@ def enter():
           'entered_manhours' : enter_hours.get()
        })
 
-    c.execute(""" UPDATE """)
+    c.execute(""" SELECT * FROM sector
+                    WHERE sector_name = :designation""",
+                    {
+                        'designation':designation
+                    })
+    sectorWage_ = c.fetchall()
+    a = sectorWage_[0]
+    sectorWage = a[2]
+    
+    calculated_wage = sectorWage * int(enter_hours.get())
+    
+    c.execute(""" UPDATE projects
+                SET wages_payable = wages_payable + :wages_calculated
+                WHERE project_number = :projectnumber""",
+                {
+                    'wages_calculated' : calculated_wage,
+                    'projectnumber': enter_project_number.get()
+                })
 
     # Commit changes
     conn.commit()  
@@ -109,6 +126,8 @@ designation_btn = Button(root, text = 'Designations', width = 20, height = 2, co
 project_btn = Button(root, text = 'Projects', width = 20, height = 2, command = projects_btn).grid(row = 0, column = 2)
 
 space_inBetween = Label(root, text = "       ", width = 8, height = 2).grid(row = 1, column = 1)
+
+# Enter details
 enter_project_number_label = Label(root, text = "Enter Project Number : ", width = 20, height = 2).grid(row = 2, column = 0)
 enter_project_number = Entry(root, width = 20)
 enter_project_number.grid(row = 2, column = 1)

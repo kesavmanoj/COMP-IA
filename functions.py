@@ -408,6 +408,7 @@ def projects_btn():
             estimated_engineer_manhours.insert(0, project_record[8])
             estimated_manager_manhours.insert(0, project_record[9])
             estimated_fitter_manhours.insert(0, project_record[10])
+            wages_paid.insert(0, project_record[11])
         
         currents_manhours = c.execute("SELECT * FROM specific_man_hours WHERE project_number = "+ project_number2)
         current_manhours = c.fetchall()
