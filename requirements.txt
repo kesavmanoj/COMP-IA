@@ -1,0 +1,31 @@
+# Project Management System Dependencies
+# Refactored version requirements
+
+# No external packages required for the basic refactored version
+# All dependencies are part of Python standard library:
+# - tkinter (GUI framework - built-in)
+# - sqlite3 (database - built-in)
+# - logging (logging system - built-in)
+# - unittest (testing framework - built-in)
+# - typing (type hints - built-in in Python 3.5+)
+
+# Optional: For enhanced development experience
+# pytest>=7.0.0              # Alternative testing framework
+# black>=22.0.0               # Code formatting
+# flake8>=4.0.0               # Code linting
+# mypy>=0.991                 # Type checking
+
+# Optional: For future enhancements
+# pandas>=1.4.0               # Data analysis and export functionality
+# openpyxl>=3.0.0             # Excel export support
+# python-dotenv>=0.19.0       # Environment variable management
+
+# Optional: For web version (future upgrade)
+# fastapi>=0.75.0             # Web API framework
+# uvicorn>=0.17.0             # ASGI server
+# jinja2>=3.1.0               # Template engine
+# python-multipart>=0.0.5     # File upload support
+
+# Development tools (optional)
+# pre-commit>=2.17.0          # Git hooks for code quality
+# coverage>=6.0               # Code coverage reporting
